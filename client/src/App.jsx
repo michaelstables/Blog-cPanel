@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme, darkTheme } from './theme';
+import Navbar from './components/navigation/Navbar'; // Adjust the path as per your project structure
+import CssBaseline from '@mui/material/CssBaseline';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Import your page components
+import Dashboard from './pages/Dashboard';
+import ContentManagement from './pages/ContentManagement';
+import UserManagement from './pages/UserManagement';
+import Settings from './pages/Settings';
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App = () => {
+    const [theme, setTheme] = useState('light');
 
-export default App
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    return (
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <CssBaseline /> {/* It helps with consistent rendering across browsers */}
+            <Router>
+                <Navbar onToggleTheme={toggleTheme} theme={theme} />
+                <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/content-management" element={<ContentManagement />} />
+                    <Route path="/user-management" element={<UserManagement />} />
+                    <Route path="/settings" element={<Settings />} />
+                    {/* Add more routes as needed */}
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
+};
+
+export default App;
