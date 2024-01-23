@@ -27,7 +27,7 @@ const App = () => {
     }, []); // Empty dependency array means this effect runs once on mount
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'dark'));
     };
 
     const ProtectedRoute = ({ children }) => {
